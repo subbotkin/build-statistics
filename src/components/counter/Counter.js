@@ -27,10 +27,23 @@ class Counter extends React.Component {
   }
 
   render() {
-    return <h1>{ this.state.isLoading 
+    return <h1> { 
+      this.state.isLoading 
       ? 'Loading'
-      : new Date(this.state.value * 1000).toISOString().substr(11, 8)}</h1>;
+      : 'Total build time: ' + formattedTime(this.state.value) 
+    } </h1>;
   }
 }
+
+function formattedTime(totalSeconds) {
+  var hours = Math.floor(totalSeconds / 3600);
+  totalSeconds %= 3600;
+  var minutes = Math.floor(totalSeconds / 60);
+  var seconds = totalSeconds % 60;
+
+  return (hours > 0 ? hours + ' hours, ' : '') +
+         (minutes > 0 ? minutes + ' minutes, ' : '') +
+         (seconds > 0 ? seconds + ' seconds' : '')
+}  
 
 export default Counter;
