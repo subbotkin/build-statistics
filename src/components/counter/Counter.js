@@ -1,5 +1,5 @@
-import React from 'react'
-import firebase from 'firebase'
+import React from 'react';
+import axios from 'axios';
 
 class Counter extends React.Component {
   componentWillMount() {
@@ -7,25 +7,29 @@ class Counter extends React.Component {
       isLoading: true,
       value: null
     });
-    this.firebaseRef = firebase.database()
-    var valueRef = this.firebaseRef.ref('value');
-    valueRef.on('value', function(snapshot) {
-      this.value = snapshot.val();
-      this.setState({
-        isLoading: false,
-        value: this.value
+    axios.get('https://alohabuildtime.herokuapp.com/builds')
+      .then( (response) => {
+        this.setState({
+          isLoading: false,
+          value: response.data.reduce((total, build) => total + build.buildTime, 0)
+        });
+      })
+      .catch( (error) => {
+        this.setState({
+          isLoading: false,
+          value: 'Error'
+        });
       });
-    }.bind(this));
   }
 
   componentWillUnmount() {
-    this.firebaseRef.off();
+
   }
 
   render() {
     return <h1>{ this.state.isLoading 
       ? 'Loading'
-      : 'Hello, ' + this.state.value }</h1>;
+      : new Date(this.state.value * 1000).toISOString().substr(11, 8)}</h1>;
   }
 }
 
