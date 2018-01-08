@@ -1,20 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createLogger } from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
+import rootReducer from './components/counter/reducers'
+import App from './App'
 import registerServiceWorker from './registerServiceWorker';
-import Counter from './components/counter/Counter'
-import firebase from 'firebase'
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyCwO7IQ3i7DEOlzR5n1KKHcqMnlwZDQ1Pc',
-  authDomain: 'build-statistics.firebaseapp.com',
-  databaseURL: 'https://build-statistics.firebaseio.com',
-  storageBucket: 'build-statistics.appspot.com'
-}
+const loggerMiddleware = createLogger()
 
+let store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware, // lets us dispatch() functions
+    loggerMiddleware // neat middleware that logs actions
+  )
+)
 
-firebase.initializeApp(firebaseConfig);
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
 
-ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

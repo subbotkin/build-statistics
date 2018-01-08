@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './settings.svg';
 import './App.css';
-import Counter from './components/counter/Counter';
+import BuildTimeCounter from './components/counter/BuildTimeCounter';
 
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <Counter/>
+        <BuildTimeCounter/>
       </div>
     );
   }
