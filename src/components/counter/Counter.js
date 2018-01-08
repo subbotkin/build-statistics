@@ -1,13 +1,29 @@
 import React from 'react';
 import axios from 'axios';
 
+var PERIOD = {
+  TOTAL : {value: 0, name: "Total", query: null},
+  DAY : {value: 1, name: "Day", query: "day"}, 
+  WEEK : {value: 2, name: "Week", query: "week"}, 
+  MONTH : {value: 3, name: "Month", query: "month"}
+};
+
 class Counter extends React.Component {
   componentWillMount() {
     this.setState({
       isLoading: true,
-      value: null
+      value: null,
+      period: PERIOD.WEEK
     });
-    axios.get('https://alohabuildtime.herokuapp.com/builds')
+  }
+
+  componentDidMount() {
+    this.load();
+  }
+
+  load = () => {
+    let query = 'https://alohabuildtime.herokuapp.com/builds?' + (this.state.period.query ? (this.state.period.query + '=' + this.currentDay()) : '');
+    axios.get(query)
       .then( (response) => {
         this.setState({
           isLoading: false,
@@ -22,16 +38,39 @@ class Counter extends React.Component {
       });
   }
 
-  componentWillUnmount() {
+  currentDay = () => {
+    var dateFormat = require('dateformat');
+    var now = new Date();
 
+    return dateFormat(now, "dd-mm-yyyy");
+  }
+
+  updatePeriod = (period) => {
+    this.setState({
+      isLoading: true,
+      value: 'Error',
+      period: period
+    });
+
+    this.load();
   }
 
   render() {
-    return <h1> { 
+    return <div>
+    <div>
+      <select id="lang" onChange={this.updatePeriod} value={this.state.period}>
+        <option value={PERIOD.TOTAL}>{PERIOD.TOTAL.name}</option>
+        <option value={PERIOD.DAY}>{PERIOD.DAY.name}</option>
+        <option value={PERIOD.WEEK}>{PERIOD.WEEK.name}</option>
+        <option value={PERIOD.MONTH}>{PERIOD.MONTH.name}</option>
+      </select>
+    </div>
+    <h1> { 
       this.state.isLoading 
       ? 'Loading'
       : 'Total build time: ' + formattedTime(this.state.value) 
-    } </h1>;
+    } </h1>
+    </div>
   }
 }
 
