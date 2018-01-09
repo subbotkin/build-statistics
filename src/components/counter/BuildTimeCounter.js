@@ -13,6 +13,10 @@ const mapDispatchToProps = dispatch => {
   return {
     onComponentDidMount: () => {
       dispatch(fetchBuilds('0'))
+    },
+
+    onPeriodChanged: (period) => {
+      dispatch(fetchBuilds(period))
     }
   }
 }

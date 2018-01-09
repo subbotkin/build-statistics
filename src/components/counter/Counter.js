@@ -6,10 +6,19 @@ class Counter extends React.Component {
     this.props.onComponentDidMount()
   }
 
+  updatePeriod = (event) => {
+    this.props.onPeriodChanged(event.target.value)
+  }
+
   render() {
     return <div>
       <div>
-
+      <select id="lang" onChange={this.updatePeriod} value={this.props.period}>
+        <option value={0}>Total</option>
+        <option value={1}>Day</option>
+        <option value={2}>Week</option>
+        <option value={3}>Month</option>
+      </select>
       </div>
       <h1> {
         this.props.isFetching

@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch'
-import { dateformat } from 'dateformat'
+import dateformat from 'dateformat'
 
 export const SELECT_PERIOD = 'SELECT_PERIOD'
 
@@ -39,13 +39,12 @@ export function fetchBuilds(period) {
     }
 
     function currentDay() {
-
-      var now = new Date();
-
-      return dateformat(now, "dd-mm-yyyy");
+      var now = new Date()
+      return dateformat(now, "dd-mm-yyyy")
     }
 
-    let query = 'https://alohabuildtime.herokuapp.com/builds';
+    let query = 'https://alohabuildtime.herokuapp.com/builds?' +
+     (queryParameters[period] ? (queryParameters[period] + '=' + currentDay()) : '')
 
     return fetch(query)
       .then(
