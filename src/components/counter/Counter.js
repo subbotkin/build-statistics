@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import './Counter.css';
 
 class Counter extends React.Component {
   componentDidMount() {
@@ -13,7 +14,7 @@ class Counter extends React.Component {
   render() {
     return <div>
       <div>
-      <select id="lang" onChange={this.updatePeriod} value={this.props.period}>
+      <select className="Counter period-select" onChange={this.updatePeriod} value={this.props.period}>
         <option value={0}>Total</option>
         <option value={1}>Day</option>
         <option value={2}>Week</option>

@@ -7,6 +7,7 @@
     "cors-anywhere": "^0.4.1",
     "cross-fetch": "^1.1.1",
     "dateformat": "^3.0.2",
+    "node-sass-chokidar": "^0.0.3",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -19,6 +20,8 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
