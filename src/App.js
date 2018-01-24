@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './settings.svg';
+import compiling from './compiling.png';
 import './App.css';
 import BuildTimeCounter from './components/counter/BuildTimeCounter';
 
@@ -11,6 +12,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <BuildTimeCounter/>
+        <img src={compiling} className="App-compiling" alt="compiling" />
       </div>
     );
   }
