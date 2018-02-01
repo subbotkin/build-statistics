@@ -26,6 +26,11 @@ class Counter extends React.Component {
         ? 'Загрузка'
         : 'Денег прокомпилено: ' + calculateCost(this.props.buildTime)
       } </h1>
+      <h1> {
+        this.props.isFetching
+        ? ''
+        : 'А вот на iMac Pro с 18 ядрами это бы стоило: ' + calculateMacProCost(this.props.buildTime)
+      } </h1>
     </div>
   }
 }
@@ -43,6 +48,10 @@ function formattedTime(totalSeconds) {
 
 function calculateCost(totalSeconds) {
   return '€' + (totalSeconds * 25 / 60 / 60).toFixed(2);
+}
+
+function calculateMacProCost(totalSeconds) {
+  return '€' + (totalSeconds * 25 / 60 / 60 / 4.5).toFixed(2);
 }
 
 Counter.propTypes = {
