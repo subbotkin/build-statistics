@@ -23,8 +23,8 @@ class Counter extends React.Component {
       </div>
       <h1> {
         this.props.isFetching
-        ? 'Loading'
-        : 'Total build time: ' + formattedTime(this.props.buildTime)
+        ? 'Загрузка'
+        : 'Денег прокомпилено: ' + calculateCost(this.props.buildTime)
       } </h1>
     </div>
   }
@@ -39,6 +39,10 @@ function formattedTime(totalSeconds) {
   return (hours > 0 ? hours + ' hours, ' : '') +
          (minutes > 0 ? minutes + ' minutes, ' : '') +
          (seconds > 0 ? seconds + ' seconds' : '')
+}
+
+function calculateCost(totalSeconds) {
+  return '€' + (totalSeconds * 25 / 60 / 60).toFixed(2);
 }
 
 Counter.propTypes = {
